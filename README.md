@@ -1,0 +1,1 @@
+## Script code random generator
