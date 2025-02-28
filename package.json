@@ -1,0 +1,19 @@
+{
+  "name": "scriptcode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "Gabriel Martinez",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bwip-js": "4.5.1",
+    "express": "4.21.2",
+    "ws": "8.18.1"
+  }
+}
