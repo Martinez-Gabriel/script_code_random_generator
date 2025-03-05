@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QA-PDF417</title>
+  <title>Script</title>
 </head>
 <body>
   <h1>Script generador dni PDF417</h1>
@@ -12,33 +12,35 @@
   <h2 id="lastName"></h2>
   
   <script>
-    const qrImage = document.getElementById('qrCodeImage');
-    const firstNameElement = document.getElementById('firstName');
-    const lastNameElement = document.getElementById('lastName');
     
-    // Establecer la conexión WebSocket
-    const socket = new WebSocket('ws://localhost:3001');
+    async function fetchQRCodeData() {
+      try {
+        
+        const response = await fetch('http://localhost:3001/code');
+        const data = await response.json();
 
-    socket.onopen = () => {
-      console.log('Conexión WebSocket abierta');
-    };
+        console.log("esto es data", data)
+        
+        
+        if (!response.ok) {
+          throw new Error('Error en la respuesta de la API');
+        }
 
-    socket.onmessage = (event) => {
-      const message = JSON.parse(event.data);
+        
+        const qrImage = document.getElementById('qrCodeImage');
+        const firstNameElement = document.getElementById('firstName');
+        const lastNameElement = document.getElementById('lastName');
 
-      qrImage.src = `data:image/png;base64,${message.qrBase64}`;
-      
-      firstNameElement.textContent = `Nombre: ${message.userData.firstName}`;
-      lastNameElement.textContent = `Apellido: ${message.userData.lastName}`;
-    };
+        
+        qrImage.src = `data:image/png;base64,${data.qrBase64}`;
+        firstNameElement.textContent = `Nombre: ${data.userData.firstName}`;
+        lastNameElement.textContent = `Apellido: ${data.userData.lastName}`;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
 
-    socket.onerror = (error) => {
-      console.error('WebSocket Error:', error);
-    };
-
-    socket.onclose = () => {
-      console.log('Conexión WebSocket cerrada');
-    };
+    fetchQRCodeData();
   </script>
 </body>
 </html>
