@@ -42,14 +42,14 @@ wss.on('connection', (ws) => {
   console.log('Cliente conectado al WebSocket');
 
   sendQRCodeWs(ws, {
-    dni: '00956938456',
+    dni: '00616938456',
     lastName: 'MARTINEZ',
-    firstName: 'GABRIEL ALEJANDRO',
+    firstName: 'GABRIEL',
     gender: 'M',
-    idNumber: '42675456',
-    category: 'B',
-    birthDate: '29/02/1991',
-    issueDate: '29/02/2010'
+    idNumber: '65625156',
+    category: 'A',
+    birthDate: '22/09/1991',
+    issueDate: '10/02/2003'
   });
 
   setInterval( async () => {
