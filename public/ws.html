@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Script</title>
+</head>
+<body>
+  <h1>Script generador dni PDF417 con WebSocket</h1>
+  <img id="qrCodeImage" src="" alt="PDF417 Barcode" width="300" />
+  <h2 id="firstName"></h2>
+  <h2 id="lastName"></h2>
+  
+  <script>
+    const qrImage = document.getElementById('qrCodeImage');
+    const firstNameElement = document.getElementById('firstName');
+    const lastNameElement = document.getElementById('lastName');
+    
+    // Establecer la conexión WebSocket
+    const socket = new WebSocket('ws://localhost:3001/ws');
+
+    socket.onopen = () => {
+      console.log('Conexión WebSocket abierta');
+    };
+
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+
+      qrImage.src = `data:image/png;base64,${message.qrBase64}`;
+      
+      firstNameElement.textContent = `Nombre: ${message.userData.firstName}`;
+      lastNameElement.textContent = `Apellido: ${message.userData.lastName}`;
+    };
+
+    socket.onerror = (error) => {
+      console.error('WebSocket Error:', error);
+    };
+
+    socket.onclose = () => {
+      console.log('Conexión WebSocket cerrada');
+    };
+  </script>
+</body>
+</html>
